@@ -86,7 +86,7 @@ namespace RouteClaculator
                 routesWithStartingLocation = new List<Routes>(routes);
             else
                 routesWithStartingLocation = new List<Routes>(
-                    routes.Where(x => x == startingPoint));
+                    routes.Where(x => x.LocationStart == startingPoint.LocationEnd));
 
             foreach (Routes route in routesWithStartingLocation)
             {
