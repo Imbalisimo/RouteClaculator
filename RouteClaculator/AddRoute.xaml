@@ -7,15 +7,15 @@
         mc:Ignorable="d"
         Title="AddRoute" Height="450" Width="800">
     <Grid>
-        <ComboBox Name="cb_locationStarting" HorizontalAlignment="Left" Height="30" Margin="50,140,0,0" VerticalAlignment="Top" Width="258" DropDownOpened="StartingLocationCb_Opened"/>
         <Label Content="Starting location" HorizontalAlignment="Left" Margin="128,109,0,0" VerticalAlignment="Top"/>
-        <ComboBox Name="cb_locationFinal" HorizontalAlignment="Left" Height="30" Margin="456,140,0,0" VerticalAlignment="Top" Width="258" DropDownOpened="FinalLocationCb_Opened"/>
+        <TextBox Name="tb_start" HorizontalAlignment="Left" Height="23" Margin="50,147,0,0" TextWrapping="Wrap" Text="{Binding LocationStart, Mode=TwoWay}" VerticalAlignment="Top" Width="258"/>
         <Label Content="Final location" HorizontalAlignment="Left" Margin="536,109,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tb_end" HorizontalAlignment="Left" Height="23" Margin="445,147,0,0" TextWrapping="Wrap" Text="{Binding LocationEnd, Mode=TwoWay}" VerticalAlignment="Top" Width="258"/>
         <Label Content="-" FontSize="100" HorizontalAlignment="Left" Margin="348,72,0,0" VerticalAlignment="Top"/>
         <Label Content="Distance: "  HorizontalAlignment="Left" Margin="101,262,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="tb_distance" HorizontalAlignment="Left" FontSize="20" Height="25" Margin="167,266,0,129" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"/>
+        <TextBox Name="tb_distance" HorizontalAlignment="Left" Height="71" Margin="159,248,0,101" TextWrapping="Wrap" Text="{Binding RouteLength, Mode=TwoWay}" VerticalAlignment="Center" Width="128"/>
         <Label Content="City" HorizontalAlignment="Left" Margin="159,41,0,0" VerticalAlignment="Top"/>
-        <ComboBox Name="cb_cities" HorizontalAlignment="Left" Margin="50,72,0,0" VerticalAlignment="Top" Width="258" DropDownOpened="CityCb_Opened" SelectionChanged="CityCb_SelectionChanged"/>
-        <Button Content="Add" FontSize="20" HorizontalAlignment="Left" Margin="536,266,0,0" VerticalAlignment="Top" Width="118" Height="37" Click="AddButton_Click"/>
+        <ComboBox Name="cb_cities" HorizontalAlignment="Left" Margin="50,72,0,0" VerticalAlignment="Top" Width="258" DropDownOpened="CityCb_Opened" SelectedItem="{Binding City, Mode=TwoWay}"/>
+        <Button Content="{Binding Mode}" FontSize="20" HorizontalAlignment="Left" Margin="536,266,0,0" VerticalAlignment="Top" Width="118" Height="37" Click="AddButton_Click"/>
     </Grid>
 </Window>

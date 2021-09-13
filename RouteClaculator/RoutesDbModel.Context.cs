@@ -25,8 +25,7 @@ namespace RouteClaculator
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Cities> Cities { get; set; }
-        public virtual DbSet<Locations> Locations { get; set; }
-        public virtual DbSet<Routes> Routes { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Route> Routes { get; set; }
     }
 }

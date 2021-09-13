@@ -19,11 +19,22 @@ namespace RouteClaculator
     /// </summary>
     public partial class AddRoute : Window
     {
+        RouteModel model = new RouteModel();
         public AddRoute()
         {
             InitializeComponent();
             cb_cities.ItemsSource = RoutesDatabaseContext.GetCities();
+            this.DataContext = model;
             cb_cities.SelectedIndex = 0;
+        }
+
+        public AddRoute(Route route)
+        {
+            InitializeComponent();
+            List<City> cities = RoutesDatabaseContext.GetCities();
+            cb_cities.ItemsSource = cities;
+            RouteMapper.Map(model, route);
+            this.DataContext = model;
         }
 
         private void CityCb_Opened(object sender, EventArgs e)
@@ -31,34 +42,19 @@ namespace RouteClaculator
             cb_cities.ItemsSource = RoutesDatabaseContext.GetCities();
         }
 
-        private void CityCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            cb_locationStarting.ItemsSource = RoutesDatabaseContext.GetLocationsByCity((Cities)cb_cities.SelectedItem);
-        }
-
-        private void StartingLocationCb_Opened(object sender, EventArgs e)
-        {
-            cb_locationStarting.ItemsSource = RoutesDatabaseContext.GetLocationsByCity((Cities)cb_cities.SelectedItem);
-        }
-
-        private void FinalLocationCb_Opened(object sender, EventArgs e)
-        {
-            cb_locationFinal.ItemsSource = RoutesDatabaseContext.GetLocationsByCity((Cities)cb_cities.SelectedItem);
-        }
-
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            decimal distance;
-            if(decimal.TryParse(tb_distance.Text, out distance))
+            if (!model.IsFilled)
+                return;
+            if(!model.IsEdit)
             {
-                Routes route = new Routes();
-                route.City = ((Cities)cb_cities.SelectedItem).Id;
-                route.LocationStart = ((Locations)cb_locationStarting.SelectedItem).Id;
-                route.LocationEnd = ((Locations)cb_locationFinal.SelectedItem).Id;
-                route.RouteLength = distance;
-                RoutesDatabaseContext.AddRoute(route);
-                tb_distance.Text = "";
+                RoutesDatabaseContext.AddRoute(model);
             }
+            else
+            {
+                RoutesDatabaseContext.EditRoute(model);
+            }
+            Close();
         }
     }
 }

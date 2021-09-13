@@ -8,30 +8,29 @@ namespace RouteClaculator
 {
     public class Path
     {
-        public List<Routes> Routes { get; }
         public Path()
         {
-            Routes = new List<Routes>();
+            Routes = new List<Route>();
         }
 
-        public Path(List<Routes> routes)
-        {
-            Routes = routes;
-        }
+        public List<Route> Routes { get; set; }
 
-        public Path(Routes route)
+        public decimal PathLength()
         {
-            Routes = new List<Routes>();
-            Routes.Add(route);
+            decimal returnLength = 0;
+            foreach (Route route in Routes)
+                returnLength += route.RouteLength;
+
+            return returnLength;
         }
 
         public override string ToString()
         {
             string returnString = "";
-            foreach(Routes route in Routes)
-            {
+            foreach (Route route in Routes)
                 returnString += route.ToString() + "\n";
-            }
+            returnString += "Total: " + PathLength() + "km";
+
             return returnString;
         }
     }

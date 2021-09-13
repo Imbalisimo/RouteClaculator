@@ -84,47 +84,53 @@
     <Compile Include="AddCity.xaml.cs">
       <DependentUpon>AddCity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddLocation.xaml.cs">
-      <DependentUpon>AddLocation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AddRoute.xaml.cs">
       <DependentUpon>AddRoute.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Cities.cs">
-      <DependentUpon>RoutesDB.tt</DependentUpon>
+    <Compile Include="AllRoutes.xaml.cs">
+      <DependentUpon>AllRoutes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Locations.cs">
-      <DependentUpon>RoutesDB.tt</DependentUpon>
+    <Compile Include="City.cs">
+      <DependentUpon>RoutesDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generate.xaml.cs">
+      <DependentUpon>Generate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Path.cs" />
-    <Compile Include="Routes.cs">
-      <DependentUpon>RoutesDB.tt</DependentUpon>
+    <Compile Include="Route.cs">
+      <DependentUpon>RoutesDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RouteMapper.cs" />
+    <Compile Include="RouteModel.cs" />
     <Compile Include="RoutesDatabaseContext.cs" />
-    <Compile Include="RoutesDB.Context.cs">
+    <Compile Include="RoutesDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RoutesDB.Context.tt</DependentUpon>
+      <DependentUpon>RoutesDbModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="RoutesDB.cs">
+    <Compile Include="RoutesDbModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RoutesDB.tt</DependentUpon>
+      <DependentUpon>RoutesDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="RoutesDB.Designer.cs">
+    <Compile Include="RoutesDbModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RoutesDB.edmx</DependentUpon>
+      <DependentUpon>RoutesDbModel.edmx</DependentUpon>
     </Compile>
     <Page Include="AddCity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddLocation.xaml">
+    <Page Include="AddRoute.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddRoute.xaml">
+    <Page Include="AllRoutes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Generate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,30 +170,30 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="RoutesDB.edmx">
+    <EntityDeploy Include="RoutesDbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RoutesDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>RoutesDbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="RoutesDB.edmx.diagram">
-      <DependentUpon>RoutesDB.edmx</DependentUpon>
+    <None Include="RoutesDbModel.edmx.diagram">
+      <DependentUpon>RoutesDbModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RoutesDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RoutesDB.edmx</DependentUpon>
-      <LastGenOutput>RoutesDB.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="RoutesDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="RoutesDB.tt">
+    <Content Include="RoutesDbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RoutesDB.edmx</DependentUpon>
-      <LastGenOutput>RoutesDB.cs</LastGenOutput>
+      <DependentUpon>RoutesDbModel.edmx</DependentUpon>
+      <LastGenOutput>RoutesDbModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RoutesDbModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RoutesDbModel.edmx</DependentUpon>
+      <LastGenOutput>RoutesDbModel.cs</LastGenOutput>
     </Content>
     <Content Include="RoutesDB_log.ldf">
       <DependentUpon>RoutesDB.mdf</DependentUpon>

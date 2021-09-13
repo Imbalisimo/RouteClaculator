@@ -8,7 +8,7 @@ namespace RouteClaculator
 {
     public static class RoutesDatabaseContext
     {
-        public static List<Cities> GetCities()
+        public static List<City> GetCities()
         {
             using (RoutesDBEntities routesDB = new RoutesDBEntities())
             {
@@ -16,100 +16,110 @@ namespace RouteClaculator
             }
         }
 
+        public static City GetCityByName(string cityName)
+        {
+            using (RoutesDBEntities routesDB = new RoutesDBEntities())
+            {
+                return routesDB.Cities.Where(x => x.CityName == cityName).FirstOrDefault();
+            }
+        }
+
         public static void AddCity(string cityName)
         {
             using (RoutesDBEntities routesDB = new RoutesDBEntities())
             {
-                routesDB.Cities.Add(new Cities(cityName));
+                routesDB.Cities.Add(new City(cityName));
                 routesDB.SaveChanges();
             }
         }
 
-        public static List<Locations> GetLocations()
-        {
-            using (RoutesDBEntities routesDB = new RoutesDBEntities())
-            {
-                return routesDB.Locations.ToList();
-            }
-        }
-
-        public static List<Locations> GetLocationsByCity(Cities city)
-        {
-            using (RoutesDBEntities routesDB = new RoutesDBEntities())
-            {
-                return routesDB.Locations.Where(x => x.City == city.Id).ToList();
-            }
-        }
-
-        public static Locations GetLocationById(int id)
-        {
-            using (RoutesDBEntities routesDB = new RoutesDBEntities())
-            {
-                return routesDB.Locations.Where(x => x.Id == id).FirstOrDefault();
-            }
-        }
-
-        public static void AddLocation(Locations location)
-        {
-            using (RoutesDBEntities routesDB = new RoutesDBEntities())
-            {
-                routesDB.Locations.Add(location);
-                routesDB.SaveChanges();
-            }
-        }
-
-        public static List<Routes> GetRoutes()
+        public static List<Route> GetRoutes()
         {
             using (RoutesDBEntities routesDB = new RoutesDBEntities())
             {
                 return routesDB.Routes.ToList();
             }
         }
-
-        public static List<Path> GetRoutesWithLength(decimal length, Cities city)
-        {
-            List<Routes> routes = GetRoutes();
-            return GetRoutesWithLength(length, routes.Where(x => x.City == city.Id).ToList());
-        }
-
-        private static List<Path> GetRoutesWithLength(decimal length, List<Routes> routes, Routes startingPoint = null)
-        {
-            List<Routes> routesWithStartingLocation;
-            List<Path> returnPaths = new List<Path>();
-
-            if (length < -1)
-                return null;
-            if (length > -1 && length < 1)
-                return new List<Path>(new[] { new Path() });
-
-            if (startingPoint == null)
-                routesWithStartingLocation = new List<Routes>(routes);
-            else
-                routesWithStartingLocation = new List<Routes>(
-                    routes.Where(x => x.LocationStart == startingPoint.LocationEnd));
-
-            foreach (Routes route in routesWithStartingLocation)
-            {
-                List<Path> paths = GetRoutesWithLength(
-                    length - route.RouteLength,
-                    routes.Where(x => x != route).ToList(),
-                    route);
-                if(paths != null)
-                {
-                    foreach (Path path in paths)
-                        path.Routes.Add(route);
-                    returnPaths.AddRange(paths);
-                }
-            }
-
-            return returnPaths;
-        }
-
-        public static void AddRoute(Routes route)
+        public static List<Route> GetRoutesByCity(City city)
         {
             using (RoutesDBEntities routesDB = new RoutesDBEntities())
             {
-                routesDB.Routes.Add(route);
+                return routesDB.Routes.Where(x => x.City == city.CityName).ToList();
+            }
+        }
+
+        public static List<Path> GetRandomRoutesWithLength(decimal length, City city)
+        {
+            List<Route> routes = GetRoutes();
+            return Knapsack(routes, length, city).ToList().Shuffle().Take(5).ToList();
+        }
+
+        private static List<Path> Knapsack(List<Route> routes, decimal length, City city)
+        {
+            if (length < -1)
+                return null;
+            if (length <= 1)
+                return new List<Path>() { new Path() };
+
+            List<Route> potentialRoutes = new List<Route>(routes);
+            List<Path> existingPaths = new List<Path>();
+            foreach(Route route in routes)
+            {
+                potentialRoutes.Remove(route);
+                List<Path> returnPaths = Knapsack(potentialRoutes, length - route.RouteLength, city);
+                if (returnPaths != null)
+                {
+                    foreach (Path path in returnPaths)
+                        path.Routes.Add(route);
+                    existingPaths.AddRange(returnPaths);
+
+                }
+            }
+            return existingPaths;
+        }
+
+        private static Random rng = new Random();
+        private static IList<T> Shuffle<T>(this IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+            return list;
+        }
+
+        public static void AddRoute(RouteModel route)
+        {
+            using (RoutesDBEntities routesDB = new RoutesDBEntities())
+            {
+                Route newRoute = new Route();
+                RouteMapper.Map(newRoute, route);
+                routesDB.Routes.Add(newRoute);
+                routesDB.SaveChanges();
+            }
+        }
+
+        public static void EditRoute(RouteModel route)
+        {
+            using (RoutesDBEntities routesDB = new RoutesDBEntities())
+            {
+                Route r = routesDB.Routes.Where(x => x.Id == route.Id).FirstOrDefault();
+                RouteMapper.Map(r, route);
+                routesDB.SaveChanges();
+            }
+        }
+
+        public static void DeleteRoute(Route route)
+        {
+            using (RoutesDBEntities routesDB = new RoutesDBEntities())
+            {
+                routesDB.Routes.Attach(route);
+                routesDB.Routes.Remove(route);
                 routesDB.SaveChanges();
             }
         }

@@ -12,23 +12,21 @@ namespace RouteClaculator
     using System;
     using System.Collections.Generic;
     
-    public partial class Routes
+    public partial class Route
     {
         public int Id { get; set; }
-        public int LocationStart { get; set; }
-        public int LocationEnd { get; set; }
+        public string LocationStart { get; set; }
+        public string LocationEnd { get; set; }
         public decimal RouteLength { get; set; }
-        public int City { get; set; }
+        public string City { get; set; }
     
-        public virtual Cities Cities { get; set; }
-        public virtual Locations Locations { get; set; }
-        public virtual Locations Locations1 { get; set; }
+        public virtual City City1 { get; set; }
 
         public override string ToString()
         {
-            return RoutesDatabaseContext.GetLocationById(LocationStart).ToString()
-                + " - " + 
-                RoutesDatabaseContext.GetLocationById(LocationEnd).ToString();
+            return LocationStart
+                + " - "
+                + LocationEnd;
         }
     }
 }

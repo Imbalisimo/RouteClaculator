@@ -5,22 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RouteClaculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DELIVERY SHOTS" Height="450" Width="800">
     <Grid>
-        <Menu HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Top">
-            <MenuItem Header="Routes">
-                <MenuItem Header="Add City" Click="MenuItemAddCity_Click"/>
-                <MenuItem Header="Add Location" Click="MenuItemAddLocation_Click"/>
-                <MenuItem Header="Add Route" Click="MenuItemAddRoute_Click"/>
-                <MenuItem Header="All Routes" Click="MenuItemAllRoutes_Click"/>
-                <MenuItem Header="Previous Routes" Click="AllPreviousRoutes_Click"/>
-            </MenuItem>
-        </Menu>
-        <TextBox Name="tb_distance" HorizontalAlignment="Left" FontSize="40" Height="50" Margin="69,166,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Distance (in km):" FontSize="30" HorizontalAlignment="Left" Margin="69,111,0,0" VerticalAlignment="Top"/>
-        <Button Content="Generate" FontSize="20" HorizontalAlignment="Left" Margin="69,259,0,0" VerticalAlignment="Top" Width="140" Height="49" Click="GenerateButton_Clicked"/>
-        <TextBox Name="tb_paths" IsReadOnly="True" HorizontalAlignment="Left" Margin="342,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="367" Width="442"/>
-        <Label Content="City" HorizontalAlignment="Left" Margin="159,41,0,0" VerticalAlignment="Top"/>
-        <ComboBox Name="cb_cities" DropDownOpened="CitiesDropDownOpened" HorizontalAlignment="Left" Margin="50,72,0,0" VerticalAlignment="Top" Width="258"/>
+        <Button Content="All routes" FontSize="50" HorizontalAlignment="Left" Margin="218,45,0,0" VerticalAlignment="Top" Width="352" Height="82" Click="AllRoutes_Click"/>
+        <Button Content="Generate" FontSize="50" HorizontalAlignment="Left" Margin="218,196,0,0" VerticalAlignment="Top" Width="352" Height="82" Click="Generate_Click"/>
     </Grid>
 </Window>

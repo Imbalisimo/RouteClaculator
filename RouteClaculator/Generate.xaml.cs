@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace RouteClaculator
 {
     /// <summary>
-    /// Interaction logic for AddLocation.xaml
+    /// Interaction logic for Generate.xaml
     /// </summary>
-    public partial class AddLocation : Window
+    public partial class Generate : Window
     {
-        public AddLocation()
+        public Generate()
         {
             InitializeComponent();
             cb_cities.ItemsSource = RoutesDatabaseContext.GetCities();
@@ -31,11 +31,18 @@ namespace RouteClaculator
             cb_cities.ItemsSource = RoutesDatabaseContext.GetCities();
         }
 
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        private void GenerateButton_Clicked(object sender, RoutedEventArgs e)
         {
-            if (tb_locationName.Text != "")
-                RoutesDatabaseContext.AddLocation(new Locations(tb_locationName.Text, (Cities)cb_cities.SelectedItem));
-            tb_locationName.Text = "";
+            tb_paths.Text = "";
+            decimal distance;
+            if (decimal.TryParse(tb_distance.Text, out distance))
+            {
+                List<Path> paths = RoutesDatabaseContext.GetRandomRoutesWithLength(distance, (City)cb_cities.SelectedItem);
+                foreach (Path path in paths)
+                {
+                    tb_paths.Text += path.ToString() + "\n\n";
+                }
+            }
         }
     }
 }

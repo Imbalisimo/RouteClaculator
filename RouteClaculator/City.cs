@@ -12,37 +12,33 @@ namespace RouteClaculator
     using System;
     using System.Collections.Generic;
     
-    public partial class Locations
+    public partial class City
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Locations()
+        public City()
         {
-            this.Routes = new HashSet<Routes>();
-            this.Routes1 = new HashSet<Routes>();
+            this.Routes = new HashSet<Route>();
         }
 
-        public Locations(string locationName, Cities city)
+        public City(string cityName)
         {
-            this.Routes = new HashSet<Routes>();
-            this.Routes1 = new HashSet<Routes>();
-
-            LocationName = locationName;
-            City = city.Id;
+            this.Routes = new HashSet<Route>();
+            CityName = cityName;
         }
 
-        public int Id { get; set; }
-        public string LocationName { get; set; }
-        public int City { get; set; }
+        public string CityName { get; set; }
     
-        public virtual Cities Cities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Routes> Routes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Routes> Routes1 { get; set; }
+        public virtual ICollection<Route> Routes { get; set; }
 
         public override string ToString()
         {
-            return LocationName;
+            return CityName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.ToString() == obj.ToString();
         }
     }
 }

@@ -23,54 +23,18 @@ namespace RouteClaculator
         public MainWindow()
         {
             InitializeComponent();
-            cb_cities.ItemsSource = RoutesDatabaseContext.GetCities();
-            cb_cities.SelectedIndex = 0;
         }
 
-        private void MenuItemAddCity_Click(object sender, RoutedEventArgs e)
+        private void AllRoutes_Click(object sender, RoutedEventArgs e)
         {
-            AddCity addCityWindow = new AddCity();
-            addCityWindow.Show();
+            AllRoutes allRoutesWindow = new AllRoutes();
+            allRoutesWindow.Show();
         }
 
-        private void AllPreviousRoutes_Click(object sender, RoutedEventArgs e)
+        private void Generate_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void MenuItemAllRoutes_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MenuItemAddRoute_Click(object sender, RoutedEventArgs e)
-        {
-            AddRoute addRouteWindow = new AddRoute();
-            addRouteWindow.Show();
-        }
-
-        private void MenuItemAddLocation_Click(object sender, RoutedEventArgs e)
-        {
-            AddLocation addLocationsWindow = new AddLocation();
-            addLocationsWindow.Show();
-        }
-
-        private void CitiesDropDownOpened(object sender, EventArgs e)
-        {
-            cb_cities.ItemsSource = RoutesDatabaseContext.GetCities();
-        }
-
-        private void GenerateButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            decimal distance;
-            if (decimal.TryParse(tb_distance.Text, out distance))
-            {
-                List<Path> paths = RoutesDatabaseContext.GetRoutesWithLength(distance, (Cities)cb_cities.SelectedItem);
-                foreach(Path path in paths)
-                {
-                    tb_paths.Text += path.ToString();
-                }
-            }
+            Generate generateWindow = new Generate();
+            generateWindow.Show();
         }
     }
 }
